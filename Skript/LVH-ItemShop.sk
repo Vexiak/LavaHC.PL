@@ -1,0 +1,53 @@
+command /isauthor:
+    trigger:
+        send "   "
+        send "&c&lDla Serwera&8: &4&llavahc"
+        send "   "
+
+command /is [<text>] [<player>]:
+	trigger:
+	executable by: player or console
+		if player has permission "admin.itemshop":
+			if arg 2 is set:
+				if arg 1 is "vip":
+					execute console command "/pex user %arg 2% group set vip"
+					broadcast "&8&m------------------------------"
+					broadcast ""
+					broadcast "&8» &7Gracz &3%arg 2% &7Zakupil range &6&lVIP&7!"
+					broadcast "&8» &7Ty tez mozesz nas wspomoc kupujac jakas usluge"
+					broadcast "&8» &7na stronie serwera &eLavaHC.Pl&7!"
+					broadcast ""
+					broadcast "&8&m------------------------------"
+					send "&8» &cPomyslnie nadales range graczowi &6&lVIP &cgraczowi &a%arg 2%&c!"
+					stop
+				if arg 1 is "svip":
+					execute console command "/pex user %arg 2% group set svip"
+					broadcast "&8&m------------------------------"
+					broadcast ""
+					broadcast "&8» &7Gracz &3%arg 2% &7Zakupil range &e&lSVIP&7!"
+					broadcast "&8» &7Ty tez mozesz nas wspomoc kupujac jakas usluge"
+					broadcast "&8» &7na stronie serwera &eSTRONA&7!"
+					broadcast ""
+					broadcast "&8&m------------------------------"
+					send "&8» &cPomyslnie nadales range graczowi &e&lSVIP &cgraczowi &a%arg 2%&c!"
+					stop
+				if arg 1 is not set:
+					send "&8&m----------&8[ &6&lITEMSHOP &8]&8&m----------"
+					send ""
+					send "&8» &e/is vip [gracz]"
+					send "&8» &e/is svip [gracz]"
+					send "&8» &e/is sponsor [gracz]"
+					send "&8» &e/is lava [gracz]"
+					send "&8» &e/is unban [gracz]"
+					send ""
+					send "&8&m----------&8[ &6&lITEMSHOP &8]&8&m----------"
+			else:
+				send "&8&m----------&8[ &6&lITEMSHOP &8]&8&m----------"
+				send ""
+				send "&8» &e/is vip [gracz]"
+				send "&8» &e/is svip [gracz]"
+				send "&8» &e/is sponsor [gracz]"
+				send "&8» &e/is lava [gracz]"
+				send "&8» &e/is unban [gracz]"
+				send ""
+				send "&8&m----------&8[ &6&lITEMSHOP &8]&8&m----------"
