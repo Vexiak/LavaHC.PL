@@ -1,0 +1,180 @@
+
+-------------------------------
+
+on command "/pex promote":
+	cancel event
+	send "&aOh! Chcesz scrashowac serwer?" to player
+	wait 2 seconds
+	send "&aBye." to player
+	wait 3 seconds
+	execute console command "/ban %player% &anie wolno tego uzywac :)"
+on command "/pex demote":
+	cancel event
+	send "&aOh! Chcesz scrashowac serwer?" to player
+	wait 2 seconds
+	send "&aBye." to player
+	wait 3 seconds
+	execute console command "/ban %player% &aNie=Ladnie"
+
+command /list:
+	trigger:
+		send ""
+		send " &b&l» &7Liczba graczy online wynosi: &a&l%number of all players%"
+		send ""
+
+command /ping [<text>]:
+	trigger:
+		send ""
+		send "                &6&lLava&f&lHC&7&l.pl"
+		send ""
+		send " &b&l» &7Twoj ping wynosi: &c%player's ping%ms&7."
+		send ""
+		send " &b&l» &7Tps serwera: &c{TPS}&7."
+		send ""
+
+every 100 seconds:
+	execute console command "save-all"	
+
+command /sendnick [<text>] [<text>]:
+	trigger:
+		if player has permission "admin.bc":
+			arg-1 is "title":
+				arg-2 is set:
+					loop all players:
+						send loop-player title "&8★ &a&n%player%&7 &8★" with subtitle "&8» &c%colored arg-2% &8«" for 4 seconds
+			arg-1 is "chat":
+				arg-2 is set:
+					broadcast "&8»&8&m-----&8» &cINFO &8«&8&M-----&8«"
+					broadcast ""
+					broadcast " &4&l%player% &8» &6%colored arg-2%"
+					broadcast ""
+					broadcast "&8»&8&m-----&8» &cINFO &8«&8&M-----&8«"
+			arg-1 is "actionbar":
+				arg-2 is set:
+					loop all players:
+						set action bar of loop-player to "&4&l%player% &8» &6%colored arg-2%"
+			arg-1 is not set:
+				send "&8» &7Poprawne uzycie: &a/sendnick (title/chat/actionbar) (wiadomosc)"
+
+variables:
+	{help.czas.%player%} = 0
+command /helpop [<text>]:
+	trigger:
+		if arg 1 is set:
+			if {help.czas.%player%} is smaller than 1:
+				loop all players:
+					if loop-player has permission "serwer.helpop":
+						send "&8»&8&m-----&8» &cHelpop &8«&8&M-----&8«" to loop-player
+						send "" to loop-player
+						send " &e» &7Gracz &2%player% &7potrzebuje pomocy!" to loop-player
+						send " &e» &7Wiadomosc: &a%arg 1%" to loop-player
+						send "" to loop-player
+						send "&8»&8&m-----&8» &cHelpop &8«&8&M-----&8«" to loop-player
+				send "&8[&aHelpop&8] &e» &7Wyslano wiadomosc o tresci: &6%arg 1%" to player
+				set {help.czas.%player%} to 20
+			else:
+				send "&8[&aHelpop&8] &e» &7Nastepna wiadomosc bedziesz mogl wyslac za: &6%{help.czas.%player%}% sekund&7."
+		else:
+			send " &8» &7Prawidlowe uzycie &a/helpop (wiadomosc)"	
+every 1 second:
+	loop all players:
+		if {help.czas.%loop-player%} is bigger than 0:
+			remove 1 from {help.czas.%loop-player%}
+
+variables:
+	{live.czas.%player%} = 0
+
+
+command /bc  [<text>] [<text>]:
+	trigger:
+		if player has permission "lc.alert":
+			arg-1 is "title":
+				arg-2 is set:
+					loop all players:
+						send loop-player title "&8★ &4Alert &8★" with subtitle "&8» &6%colored arg-2% &8«" for 4 seconds
+			arg-1 is "chat":
+				arg-2 is set:
+					broadcast ""
+					broadcast "               &6&lLava&f&lHC&7&l.pl
+					broadcast ""
+					broadcast " &8» &6%colored arg-2%"
+					broadcast ""
+			arg-1 is "actionbar":
+				arg-2 is set:
+					loop all players:
+						set action bar of loop-player to "&4&lUWAGA &8» &e%colored arg-2%"
+			arg-1 is not set:
+				send ""
+				send "&8» &eKomendy Do Zarzadzania:"
+				send ""
+				send " &8» &7Poprawne uzycie: &c/bc &6(chat/title/actionbar) (wiadomosc)"
+				send ""
+				send "&8» &7Autor: &aNeedyYourKax"
+				send "&8» &7Pomyslodawca: &aVexiaK"
+				send ""
+
+on join:
+	wait 5 tick
+	loop 100 times:
+        send ""
+	send ""
+	send "&8&m----------------------------------"
+	send ""
+	send "&b&l» &7Witaj &a%player% &7na &6&lLava&f&lHC&7&l.pl"
+	send ""
+	send "&b&l» &6IP serwera: &fLavaHC.Pl"
+	send "&8&m----------------------------------"
+
+---- anty speed mine -------		
+		
+on break stone:
+    if player has haste:
+        stop
+    if player has diamond pickaxe of efficiency 6:
+        stop
+    if player has diamond pickaxe of efficiency 7:
+        stop
+    if player has diamond pickaxe of efficiency 8:
+        stop
+    if player has diamond pickaxe of efficiency 9:
+        stop
+    if player has diamond pickaxe of efficiency 10:
+        stop
+    if player's tool is diamond pickaxe of efficiency 6:
+        stop
+    if player's tool is diamond pickaxe of efficiency 7:
+        stop
+    if player's tool is diamond pickaxe of efficiency 8:
+        stop
+    if player's tool is diamond pickaxe of efficiency 9:
+        stop
+    if player's tool is diamond pickaxe of efficiency 10:
+        stop
+    add 1 to {antispeedmajn.%player%}
+    wait 1 seconds
+    remove 1 from {antispeedmajn.%player%}
+    wait 30 seconds
+    set {antispeedmajn.%player%} to 0
+on join:
+    set {antispeedmajn.%player%} to 0
+every 1 seconds:
+    loop all players:
+        if {antispeedmajn.%loop-player%} is more than 3:
+            execute console command "^powiadomadminow %loop-player%"
+command /^powiadomadminow [<text>]:
+    executable by: console
+    trigger:
+        loop all players:
+            if loop-player has permission "antycheat.speedmine":
+                send "" to loop-player
+                send "&2» &c&lINFORMACJE (ANTYCHEAT)" to loop-player			
+                send "" to loop-player
+                send "&c• &7Gracz &b%arg-1% &7Posiada &b&lSPEEDMINE&7!" to loop-player
+                send "&c• &7Czy gracz &b%arg-1% &7posiada &bHASTE&7?" to loop-player
+                send loop-player title "&6ANTYCHEAT" with subtitle "&aTepnij sie do &8(&7%arg-1%&8) &amoze miec speedmine!" for 10 seconds
+                send "" to loop-player
+                if {%arg-1%} has haste:
+                    send "&c• &7Odpowiedz: &a&lTAK" to loop-player
+                else:
+                    send "&c• &7Odpowiedz: &c&lNIE" to loop-player
+		
